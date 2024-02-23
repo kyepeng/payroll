@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTimesheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
 use App\Timesheet;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -40,8 +41,9 @@ class TimesheetController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('Timesheet.create');
+    {   
+        $users = User::all();
+        return view('timesheets.create', compact('users'));
     }
     
     /**
@@ -54,7 +56,7 @@ class TimesheetController extends Controller
     {
         Timesheet::create($request->all());
     
-        return redirect()->route('Timesheet.index')
+        return redirect()->route('timesheets.index')
                         ->with('success','Timesheet created successfully.');
     }
     
@@ -66,7 +68,7 @@ class TimesheetController extends Controller
      */
     public function show(Timesheet $timesheet)
     {
-        return view('timesheet.show',compact('timesheet'));
+        return view('timesheets.show',compact('timesheet'));
     }
     
     /**
@@ -77,6 +79,7 @@ class TimesheetController extends Controller
      */
     public function edit(Timesheet $timesheet)
     {
+        $users = User::all();
         return view('timesheets.edit',compact('timesheet'));
     }
     

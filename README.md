@@ -81,5 +81,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # Steps
 1. composer install
 2. php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-3. docker-compose build
-4. docker-compose up -d
+3. php artisan db:seeder
+4. docker-compose build
+5. docker-compose up -d

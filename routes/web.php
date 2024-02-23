@@ -23,12 +23,8 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/', function () {
     if (Auth::check()) {
-        return view('welcome');
+        return redirect()->route('timesheets.index');
     } else {
         return redirect()->route('login');
     }

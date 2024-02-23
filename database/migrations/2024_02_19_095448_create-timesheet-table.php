@@ -16,9 +16,9 @@ class CreateTimesheetTable extends Migration
         Schema::create('timesheets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->dateTime('time_in');
-            $table->dateTime('time_out')->nullable();
-            $table->text('description')->nullable();
+            $table->integer('hours_worked');
+            $table->date('date');
+            $table->text('description');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

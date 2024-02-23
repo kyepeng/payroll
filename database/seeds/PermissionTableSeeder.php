@@ -13,10 +13,11 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
-        $roleAdmin = Role::create(['name' => 'admin']);
-        $roleUser = Role::create(['name' => 'user']);
+        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
+        $roleUser = Role::firstOrCreate(['name' => 'user']);
             
         $permissions = [
+            'user-list',
             'role-list',
             'role-create',
             'role-edit',
@@ -28,12 +29,17 @@ class PermissionTableSeeder extends Seeder
             ];
     
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
         $roleAdmin->givePermissionTo(Permission::all());
         
         // give user role permission
-        $roleUser->givePermissionTo(['timesheet-list']);
+        $roleUser->givePermissionTo([
+            'timesheet-list',
+            'timesheet-create',
+            'timesheet-edit',
+            'timesheet-delete'
+        ]);
     }
 }

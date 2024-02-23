@@ -12,6 +12,11 @@ class Timesheet extends Model
     * @var array
     */
     protected $fillable = [
-        'user_id', 'time_in', 'time_out', 'description'
+        'user_id', 'date', 'hours_worked', 'description'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

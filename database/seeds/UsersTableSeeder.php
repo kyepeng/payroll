@@ -11,24 +11,32 @@ class UsersTableSeeder extends Seeder
     {
         // Create a normal user
         $user = factory(User::class)->create([
-            'name' => 'User',
-            'email' => 'user@example.com',
+            'name' => 'Users',
+            'email' => 'user@payroll.com',
             'password' => bcrypt('user'),
         ]);
 
         // Create an admin user
         $admin = factory(User::class)->create([
             'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@payroll.com',
             'password' => bcrypt('admin'),
         ]);
-
-        $role = Role::create(['name' => 'Admin']);
-
+        
+        // assign admin
         $permissions = Permission::pluck('id','id')->all();
-  
+        $this->createRoleAndAssign($admin, 'admin', $permissions);
+
+        // assign user
+        $permissions = Permission::pluck('id','id')
+        ->where('name', 'like', '%timesheet%')
+        ->all();
+        $this->createRoleAndAssign($user, 'user', $permissions);
+    }
+
+    public function createRoleAndAssign(User $user, string $role, array $permissions) {
+        $role = Role::firstOrCreate(['name' => $role]);
         $role->syncPermissions($permissions);
-   
-        $admin->assignRole([$role->id]);
+        $user->assignRole([$role->id]);
     }
 }
