@@ -19,9 +19,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
-    Route::resource('products','ProductController');
+    Route::resource('timesheets','TimesheetController');
 });
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/', function () {
+    if (Auth::check()) {
+        return view('welcome');
+    } else {
+        return redirect()->route('login');
+    }
 });

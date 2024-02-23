@@ -1,34 +1,39 @@
-# Use the official PHP image with Apache
-FROM php:7.4-apache
+# Dockerfile
+FROM php:7.4-fpm
 
-# Install system dependencies and PHP extensions needed by Laravel
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
+    git \
+    curl \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
     zip \
     unzip \
-    git \
-    curl \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    default-mysql-client
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set working directory in the container
-WORKDIR /var/www/html
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-# Copy existing application directory contents to the container
-COPY . /var/www/html
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Set working directory
+WORKDIR /var/www
 
-# Install all PHP dependencies
-RUN composer install --no-interaction
+# Copy existing application directory contents
+COPY . /var/www
 
-# Change ownership of our applications
-RUN chown -R www-data:www-data /var/www/html
+# Install dependencies
+RUN composer install
 
-# Expose port 80 to access the Apache server
-EXPOSE 80
+# Change owner and permission of the application
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && \
+    chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+
+# Expose port 9000 and start php-fpm server
+EXPOSE 9000
+CMD ["php-fpm"]

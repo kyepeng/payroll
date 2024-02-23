@@ -13,7 +13,7 @@ class UpdateTimesheetRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class UpdateTimesheetRequest extends FormRequest
     public function rules()
     {
         return [
-            
+            'date' => 'required|date',
+            'hours_worked' => 'required|integer',
+            'description' => 'required',
+        ];
+    }
+
+    /**
+     * Get custom error messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'date.required' => 'The date field is required.',
+            'date.date' => 'The date field must be a valid date.',
+            'hours_worked.required' => 'The hours worked field is required.',
+            'hours_worked.integer' => 'The hours worked field must be an integer.',
+            'description.required' => 'The description field is required.',
         ];
     }
 }

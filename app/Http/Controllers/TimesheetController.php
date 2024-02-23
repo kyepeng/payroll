@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTimesheetRequest;
+use App\Http\Requests\UpdateTimesheetRequest;
 use App\Timesheet;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TimesheetController extends Controller
 {
@@ -44,16 +47,11 @@ class TimesheetController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreTimesheetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTimesheetRequest $request)
     {
-        request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
-    
         Timesheet::create($request->all());
     
         return redirect()->route('Timesheet.index')
@@ -85,18 +83,13 @@ class TimesheetController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\UpdateTimesheetRequest  $request
      * @param  \App\Timesheet  $timesheet
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Timesheet $timesheet)
+    public function update(UpdateTimesheetRequest $request, Timesheet $timesheet)
     {
-         request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
-    
-        $timesheet->update($request->all());
+        $timesheet->update($request->validated());
     
         return redirect()->route('timesheets.index')
                         ->with('success','Timesheet updated successfully');
