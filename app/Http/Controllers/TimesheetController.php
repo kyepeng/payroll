@@ -87,7 +87,7 @@ class TimesheetController extends Controller
     public function edit(Timesheet $timesheet)
     {
         $users = User::all();
-        return view('timesheets.edit',compact('timesheet'));
+        return view('timesheets.edit',compact('timesheet','users'));
     }
     
     /**
@@ -99,7 +99,7 @@ class TimesheetController extends Controller
      */
     public function update(UpdateTimesheetRequest $request, Timesheet $timesheet)
     {
-        $timesheet->update($request->validated());
+        $timesheet->update($request->all());
     
         return redirect()->route('timesheets.index')
                         ->with('success','Timesheet updated successfully');

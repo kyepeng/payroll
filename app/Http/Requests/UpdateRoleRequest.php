@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,11 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$this->route('user'),
-            'roles' => 'required',
+            'permission' => 'required',
         ];
     }
 
-    /**
+     /**
      * Get custom error messages for validator errors.
      *
      * @return array
@@ -38,12 +37,8 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'A name is required.',
-            'email.required' => 'An email address is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'This email is already in use.',
-            'roles.required' => 'At least one role is required.',
+            'name.required' => 'Role name is required',
+            'permission.required' => 'Role permission is required'
         ];
-
     }
 }

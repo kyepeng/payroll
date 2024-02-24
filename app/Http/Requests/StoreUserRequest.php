@@ -13,7 +13,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -31,6 +31,11 @@ class StoreUserRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get custom error messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

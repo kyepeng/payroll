@@ -20,44 +20,38 @@
     </ul>
 </div>
 @endif
-<form action="{{ route('timesheets.update',$timesheet->id) }}" method="POST">
-    @csrf
-    @method('PUT')
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            @if(auth()->user()->hasRole('admin'))
-            <select name="user_id" class="form-control">
-                @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-            </select>
-            @else
-            <input type="hidden" name="user_id" class="form-control" value="{{ auth()->user()->id }}">
-            <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}" readonly>
-            @endif
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Date:</strong>
-                <input type="date" name="date" class="form-control" placeholder="Date">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Hours Worked:</strong>
-                <input type="number" name="hours_worked" class="form-control" placeholder="Hours Worked">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Task Details:</strong>
-                <textarea class="form-control" style="height:150px" name="description" placeholder="Task Description"></textarea>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+{!! Form::model($timesheet, ['method' => 'PATCH','route' => ['timesheets.update', $timesheet->id]]) !!}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        @if(auth()->user()->hasRole('admin'))
+        {!! Form::select('user_id', $users->pluck('name','id'), null, ['class' => 'form-control']) !!}
+        @else
+        {!! Form::hidden('user_id', auth()->user()->id) !!}
+        {!! Form::text('name', auth()->user()->name, ['class' => 'form-control', 'readonly']) !!}
+        @endif
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Date:</strong>
+            {!! Form::date('date', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
         </div>
     </div>
-</form>
-
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Hours Worked:</strong>
+            {!! Form::number('hours_worked', null, ['class' => 'form-control', 'placeholder' => 'Hours Worked']) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Task Details:</strong>
+            {!! Form::textarea('description', null, ['class' => 'form-control', 'style' => 'height:150px', 'placeholder' => 'Task Description']) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+        {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+    </div>
+</div>
+{!! Form::close() !!}
 @endsection
