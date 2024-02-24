@@ -38,6 +38,7 @@ class StoreUserRequest extends FormRequest
             'email.required' => 'An email address is required.',
             'email.email' => 'The email must be a valid email address.',
             'email.unique' => 'This email is already in use.',
+            'password.required' => 'Password is required',
             'password.same' => 'The password confirmation does not match.',
             'roles.required' => 'At least one role is required.',
         ];

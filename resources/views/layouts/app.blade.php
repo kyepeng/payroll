@@ -33,8 +33,10 @@
                         <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                         <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
+                        @if(Auth::user()->hasRole('admin'))
                         <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
                         <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
+                        @endif
                         <li><a class="nav-link" href="{{ route('timesheets.index') }}">Manage Timesheet</a></li>
                     </ul>
                     <!-- Right Side Of Navbar -->
@@ -45,6 +47,9 @@
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('users.edit', auth()->user()->id) }}">
+                                    {{ __('Edit Profile') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
 document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

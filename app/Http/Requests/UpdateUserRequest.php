@@ -25,8 +25,8 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->route('id'),
-            'password' => 'nullable|same:confirm-password',
+            'email' => 'required|email|unique:users,email,'.$this->route('user'),
+            'password' => 'required|same:confirm-password',
             'current_password' => 'required_with:password|current_password',
             'roles' => 'required',
         ];
@@ -39,6 +39,7 @@ class UpdateUserRequest extends FormRequest
             'email.required' => 'An email address is required.',
             'email.email' => 'The email must be a valid email address.',
             'email.unique' => 'This email is already in use.',
+            'password.required' => 'Password is required',
             'password.min' => 'The password must be at least 8 characters.',
             'password.same' => 'The password confirmation does not match.',
             'current_password.required_with' => 'The current password field is required when updating password.',

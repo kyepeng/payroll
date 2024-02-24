@@ -18,6 +18,9 @@ class PermissionTableSeeder extends Seeder
             
         $permissions = [
             'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
             'role-list',
             'role-create',
             'role-edit',
@@ -36,6 +39,8 @@ class PermissionTableSeeder extends Seeder
         
         // give user role permission
         $roleUser->givePermissionTo([
+            'user-list',
+            'user-edit',
             'timesheet-list',
             'timesheet-create',
             'timesheet-edit',

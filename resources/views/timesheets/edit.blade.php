@@ -25,15 +25,33 @@
     @method('PUT')
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
+            @if(auth()->user()->hasRole('admin'))
+            <select name="user_id" class="form-control">
+                @foreach($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+            </select>
+            @else
+            <input type="hidden" name="user_id" class="form-control" value="{{ auth()->user()->id }}">
+            <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}" readonly>
+            @endif
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Name:</strong>
-                <input type="text" name="name" value="{{ $timesheet->name }}" class="form-control" placeholder="Name">
+                <strong>Date:</strong>
+                <input type="date" name="date" class="form-control" placeholder="Date">
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Detail:</strong>
-                <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail">{{ $timesheet->detail }}</textarea>
+                <strong>Hours Worked:</strong>
+                <input type="number" name="hours_worked" class="form-control" placeholder="Hours Worked">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Task Details:</strong>
+                <textarea class="form-control" style="height:150px" name="description" placeholder="Task Description"></textarea>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

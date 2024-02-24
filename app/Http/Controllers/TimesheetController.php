@@ -8,6 +8,7 @@ use App\Timesheet;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TimesheetController extends Controller
 {
@@ -30,9 +31,15 @@ class TimesheetController extends Controller
      */
     public function index()
     {
-        $timesheets = Timesheet::latest()->paginate(5);
+        if(Auth::user()->hasRole('admin')) {
+            $timesheets = Timesheet::latest()->paginate(5);
+        } else {
+            $timesheets = Timesheet::latest()
+            ->where('user_id',Auth::user()->id)
+            ->paginate(5);
+        }
         return view('timesheets.index',compact('timesheets'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
     
     /**
