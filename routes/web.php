@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
     Route::resource('timesheets','TimesheetController');
+    Route::resource('dashboards','DashboardController');
 });
 
 Route::get('/', function () {
