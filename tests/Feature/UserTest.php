@@ -36,40 +36,6 @@ class UserTest extends TestCase
         $this->unauthorizedUser = factory(User::class)->create();
     }
 
-    public function createAdminUser() {
-        $admin = factory(User::class)->create([
-            'name' => 'Admin',
-            'email' => 'admin@payroll.com',
-            'password' => bcrypt('admin'),
-        ]);
-        $role = Role::firstOrCreate(['name' => 'admin']);    
-        $permissions = [
-            'user-list',
-            'user-create',
-            'user-edit',
-            'user-delete',
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-            'timesheet-list',
-            'timesheet-create',
-            'timesheet-edit',
-            'timesheet-delete'
-            ];
-    
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-        }
-
-        $role->givePermissionTo(Permission::all());
-        $permissions = Permission::pluck('id','id')->all();
-        $role->syncPermissions($permissions);
-        $admin->assignRole([$role->id]);
-
-        return $admin;
-    }
-
     public function testIndex()
     {
         $response = $this->actingAs($this->user)->get(route('users.index'));
