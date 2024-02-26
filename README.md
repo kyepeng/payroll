@@ -10,9 +10,6 @@ Build the Docker images:
 Start the Docker containers:
 ```docker-compose up -d```
 
-Publish the vendor assets for Spatie Permission:
-```php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"```
-
 Run the database migrations:
 ```php artisan migrate```
 
@@ -31,17 +28,17 @@ User
 ## Feature
 Admin Role:-
 - Dashboard Management:
-    -- View all timesheet submissions
-    -- Individual column filter
-    -- General search column to filter all columns
-    -- Export filtered timesheet data to csv, excel, pdf
-    -- Filter and show number of submission < 9 hours
+    - View all timesheet submissions
+    - Individual column filter
+    - General search column to filter all columns
+    - Export filtered timesheet data to csv, excel, pdf
+    - Filter and show number of submission < 9 hours
 - Users Management:
-    -- View, create, update, and delete users
+    - View, create, update, and delete users
 - Roles Management:
-    -- View, create, update, and delete roles and permissions
+    - View, create, update, and delete roles and permissions
 - Timesheets Management:
-    -- View, create, update, and delete all users' timesheets
+    - View, create, update, and delete all users' timesheets
 
 User Role:-
 - Timesheets Management:
