@@ -12,31 +12,30 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="alert alert-info">
+        <div class="alert alert-danger" id="lessThanNineAlert">
             <h4>Timesheets with Hours Worked Less Than 9</h4>
-            <p>Total: {{ 0 }}</p>
+            <p>Total: <span id="lessThanNineCount">0</span></p>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-lg-12 margin-tb">
-        <table class="table table-bordered table-responsive" id="timesheet_table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>User</th>
-                    <th>Date</th>
-                    <th>Hours Worked</th>
-                    <th>Task Details</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="timesheet_table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Hours Worked</th>
+                        <th>Task Details</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -68,32 +67,20 @@
             serverSide: true,
             ajax: "{{ route('dashboards.index') }}",
             columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
-                },
-                {
                     data: 'user',
-                    name: 'User'
+                    name: 'user'
                 },
                 {
                     data: 'date',
-                    name: 'Date'
+                    name: 'date'
                 },
                 {
                     data: 'hours_worked',
-                    name: 'Hours Worked'
+                    name: 'hours_worked'
                 },
                 {
                     data: 'description',
-                    name: 'Task Details'
-                },
-                {
-                    data: 'created_at',
-                    name: 'Created At'
-                },
-                {
-                    data: 'updated_at',
-                    name: 'Updated At'
+                    name: 'description'
                 },
                 {
                     data: 'action',
@@ -101,7 +88,25 @@
                     orderable: false,
                     searchable: false
                 },
-            ]
+            ],
+            search: {
+                "regex": true
+            }
+        });
+
+        table.on('draw', function() {
+            var data = table.rows({
+                filter: 'applied'
+            }).data();
+            var lessThanNineCount = 0;
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].hours_worked < 9) {
+                    lessThanNineCount++;
+                }
+            }
+
+            $('#lessThanNineCount').text(lessThanNineCount);
         });
     });
 </script>

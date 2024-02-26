@@ -14,6 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
      <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body>

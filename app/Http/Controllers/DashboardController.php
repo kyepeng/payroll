@@ -28,18 +28,6 @@ class DashboardController extends Controller
     {
         if ($request->ajax()) {
             $query = Timesheet::query()->latest()->with('user');
-            // Loop through each column
-            for ($i = 0; $i < count($request->columns); $i++) {
-                $column_search_value = $request->columns[$i]['search']['value'];
-
-                // If there is a search value for this column
-                if ($column_search_value != '') {
-                    $column_name = $request->columns[$i]['name'];
-
-                    // Apply the search to the query
-                    $query->where($column_name, 'like', '%' . $column_search_value . '%');
-                }
-            }
             $data = $query->get();
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -57,13 +45,6 @@ class DashboardController extends Controller
                     return $show . ' ' . $edit . ' ' . $delete;
                 })
                 ->rawColumns(['action'])
-                ->filter(function ($query) use ($request) {
-                    if ($keyword = $request->input('search.value')) {
-                        return $query->whereHas('user', function ($subQuery) use ($keyword) {
-                            return $subQuery->where('name', 'LIKE', '%' . $keyword . '%');
-                        });
-                    }
-                })
                 ->make(true);
         }
         return view('dashboards.index');
