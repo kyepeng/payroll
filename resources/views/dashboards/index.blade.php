@@ -12,9 +12,9 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="alert alert-danger" id="lessThanNineAlert">
-            <h4>Timesheets with Hours Worked Less Than 9</h4>
-            <p>Total: <span id="lessThanNineCount">0</span></p>
+        <div class="alert alert-danger" id="lessThanThresholdAlert">
+            <h5>Timesheets < 8 Hours Worked</h5>
+            <h4>Total: <span id="lessThanThresholdCount">0</span></h4>
         </div>
     </div>
 </div>
@@ -119,15 +119,15 @@
             var data = table.rows({
                 filter: 'applied'
             }).data();
-            var lessThanNineCount = 0;
+            var lessThanThresholdCount = 0;
 
             for (var i = 0; i < data.length; i++) {
-                if (data[i].hours_worked < 9) {
-                    lessThanNineCount++;
+                if (data[i].hours_worked < 8) {
+                    lessThanThresholdCount++;
                 }
             }
 
-            $('#lessThanNineCount').text(lessThanNineCount);
+            $('#lessThanThresholdCount').text(lessThanThresholdCount);
         });
     });
 </script>
