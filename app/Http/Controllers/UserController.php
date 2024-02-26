@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $input = $request->all();
+        $input = $request->validated();
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
@@ -101,7 +101,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $input = $request->all();
+        $input = $request->validated();
         $user = User::findOrFail($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
