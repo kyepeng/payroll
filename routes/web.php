@@ -21,7 +21,7 @@ Route::group(['middleware' => ['auth','role:admin']], function() {
     Route::resource('dashboards','DashboardController');
 });
 
-Route::group(['middleware' => ['auth','role:user']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::resource('timesheets','TimesheetController');
 });
 
