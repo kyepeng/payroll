@@ -4,6 +4,9 @@ Payroll Management System
 ## Installation
 To get started with the project, follow these steps:
 
+Copy .env.example file to .env and update DB credentials:
+```cp .env.example .env```
+
 Build the Docker images:
 ```docker-compose build```
 
