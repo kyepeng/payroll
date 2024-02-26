@@ -30,6 +30,12 @@ User
 
 ## Feature
 Admin Role:-
+- Dashboard Management:
+    -- View all timesheet submissions
+    -- Individual column filter
+    -- General search column to filter all columns
+    -- Export filtered timesheet data to csv, excel, pdf
+    -- Filter and show number of submission < 9 hours
 - Users Management:
     -- View, create, update, and delete users
 - Roles Management:
