@@ -62,6 +62,27 @@
 
         // Initialize DataTable
         var table = $('#timesheet_table').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: ':not(:last)'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':not(:last)'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':not(:last)'
+                    }
+                }
+            ],
             responsive: true,
             processing: true,
             serverSide: true,
