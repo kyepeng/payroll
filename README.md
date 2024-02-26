@@ -10,6 +10,9 @@ Build the Docker images:
 Start the Docker containers:
 ```docker-compose up -d```
 
+Execture in Payroll-App container:
+```docker exec -it payroll-app bash```
+
 Run the database migrations:
 ```php artisan migrate```
 
