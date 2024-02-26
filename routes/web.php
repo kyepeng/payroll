@@ -15,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth','role:admin']], function() {
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
-    Route::resource('timesheets','TimesheetController');
     Route::resource('dashboards','DashboardController');
+});
+
+Route::group(['middleware' => ['auth','role:user']], function() {
+    Route::resource('timesheets','TimesheetController');
 });
 
 Route::get('/', function () {
