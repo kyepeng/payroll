@@ -61,7 +61,7 @@ class TimesheetController extends Controller
      */
     public function store(StoreTimesheetRequest $request)
     {
-        Timesheet::create($request->validated());
+        Timesheet::create($request->all());
     
         return redirect()->route('timesheets.index')
                         ->with('success','Timesheet created successfully.');
@@ -99,7 +99,7 @@ class TimesheetController extends Controller
      */
     public function update(UpdateTimesheetRequest $request, Timesheet $timesheet)
     {
-        $timesheet->update($request->validated());
+        $timesheet->update($request->all());
     
         return redirect()->route('timesheets.index')
                         ->with('success','Timesheet updated successfully');
